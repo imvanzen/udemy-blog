@@ -1,11 +1,38 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
+import { connect } from 'react-redux';
+import { Action } from 'redux';
+import { loadPosts } from '../actions';
 
-const PostList = (): ReactElement => {
+interface Props {
+    posts: Array<Object>,
+    loadPosts: () => Action
+}
+
+const PostList = (props: Props): ReactElement => {
+    const { posts, loadPosts } = props;
+
+    useEffect(() => {
+        console.log("Component Load");
+
+        loadPosts()
+    }, [loadPosts])
+
     return (
         <div className='post-list'>
-            App blog posts
+            <pre><code>{JSON.stringify(posts, null, 2)}</code></pre>
+            <button onClick={() => loadPosts()}>More</button>
         </div>
     )
 }
 
-export default PostList
+const mapState = (state: any) => {
+    return {
+        posts: state.posts
+    }
+}
+
+const connector = connect(mapState, {
+    loadPosts
+})
+
+export default connector(PostList)
