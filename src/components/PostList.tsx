@@ -2,9 +2,10 @@ import React, { ReactElement, useEffect } from 'react'
 import { connect } from 'react-redux';
 import { Action } from 'redux';
 import { loadPosts } from '../actions';
+import { Post } from '../types'
 
 interface Props {
-    posts: Array<Object>,
+    posts: Array<Post>,
     loadPosts: () => Action
 }
 
